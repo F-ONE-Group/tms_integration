@@ -1,30 +1,37 @@
+import os
+import pysftp
+
 from typing import Optional
 from pydantic import BaseModel
 from pydantic.dataclasses import dataclass
-import pysftp
+
+
+class SftpConfig(BaseModel):
+    host: str
+    port: int = 22
+    username: Optional[str] = None
+    password: Optional[str] = None
+    private_key: Optional[str] = None
+    private_key_pass: Optional[str] = None
+    cnopts: Optional[pysftp.CnOpts] = None
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
 @dataclass
 class SftpBase:
-
-    class Credentials(BaseModel):
-        host: str
-        port: int = 22
-        username: Optional[str]
-        password: Optional[str]
-        private_key: Optional[str]
-        private_key_pass: Optional[str]
-
-    credentials: Credentials
+    config: SftpConfig
 
     def __post_init__(self):
         conn = pysftp.Connection(
-            host=self.credentials.host,
-            port=self.credentials.port,
-            username=self.credentials.username,
-            password=self.credentials.password,
-            private_key=self.credentials.private_key,
-            private_key_pass=self.credentials.private_key_pass,
+            host=self.config.host,
+            port=self.config.port,
+            username=self.config.username,
+            password=self.config.password,
+            private_key=self.config.private_key,
+            private_key_pass=self.config.private_key_pass,
+            cnopts=self.config.cnopts,
         )
         conn.close()
 
@@ -38,15 +45,17 @@ class SftpBase:
             dest_path: The destination path on the SFTP server where the file will be uploaded.
         """
         with pysftp.Connection(
-            host=self.credentials.host,
-            port=self.credentials.port,
-            username=self.credentials.username,
-            password=self.credentials.password,
-            private_key=self.credentials.private_key,
-            private_key_pass=self.credentials.private_key_pass,
+            host=self.config.host,
+            port=self.config.port,
+            username=self.config.username,
+            password=self.config.password,
+            private_key=self.config.private_key,
+            private_key_pass=self.config.private_key_pass,
+            cnopts=self.config.cnopts,
         ) as sftp:
-            with sftp.cd(dest_path):
-                sftp.put(source_filepath)
+            filename = os.path.basename(source_filepath)
+            dest_filepath = os.path.join(dest_path, filename)
+            sftp.put(source_filepath, dest_filepath)
 
     def export_file(self, remote_filepath: str, local_filepath: str) -> None:
         """
@@ -58,11 +67,12 @@ class SftpBase:
             local_filepath (str): The local file path where the downloaded file will be saved.
         """
         with pysftp.Connection(
-            host=self.credentials.host,
-            port=self.credentials.port,
-            username=self.credentials.username,
-            password=self.credentials.password,
-            private_key=self.credentials.private_key,
-            private_key_pass=self.credentials.private_key_pass,
+            host=self.config.host,
+            port=self.config.port,
+            username=self.config.username,
+            password=self.config.password,
+            private_key=self.config.private_key,
+            private_key_pass=self.config.private_key_pass,
+            cnopts=self.config.cnopts,
         ) as sftp:
             sftp.get(remote_filepath, local_filepath)

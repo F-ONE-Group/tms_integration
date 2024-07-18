@@ -1,9 +1,11 @@
 import tempfile
+from pydantic.dataclasses import dataclass
 from tms_integration.utils.sftp import SftpBase
 
 from .models import LisIn
 
 
+@dataclass
 class LisWinSped(SftpBase):
     import_dest_folder: str
 
