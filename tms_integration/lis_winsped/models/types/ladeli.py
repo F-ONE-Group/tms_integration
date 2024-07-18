@@ -1,0 +1,77 @@
+from pydantic import BaseModel, Field, validator
+from typing import Optional
+from datetime import datetime
+
+
+class Ladeli(BaseModel):
+    satzart: str = Field("LADELI", const=True)
+    referenz: str
+    tladenr: str
+    lkwpolkz: Optional[str] = None
+    anhpolkz: Optional[str] = None
+    fahid: Optional[int] = None
+    fahname: Optional[str] = None
+    ffid: Optional[str] = None
+    ffname: Optional[str] = None
+    tournr: Optional[str] = None
+    tlade_datum: Optional[datetime] = None
+    wechselbruecke1: Optional[str] = None
+    wechselbruecke2: Optional[str] = None
+    telefon: Optional[str] = None
+    kmlast: Optional[float] = None
+    kmmaut: Optional[float] = None
+    dispo_user: Optional[str] = None
+    ffpabsch: Optional[float] = None
+    lkwgrpid: Optional[str] = None
+    tourzeit: Optional[str] = None
+    entbisdat: Optional[datetime] = None
+    entbiszeit: Optional[str] = None
+    verkart: Optional[str] = None
+    lposnr: Optional[str] = None
+    lpospausch: Optional[float] = None
+    tourinfo1: Optional[str] = None
+    tourinfo2: Optional[str] = None
+    tourinfo3: Optional[str] = None
+    tourinfo4: Optional[str] = None
+    tourinfo5: Optional[str] = None
+    tourinfo6: Optional[str] = None
+    tourinfo7: Optional[str] = None
+    tourinfo8: Optional[str] = None
+    tourinfo9: Optional[str] = None
+    tourinfo10: Optional[str] = None
+    dispoints: Optional[str] = None
+    fahvorname: Optional[str] = None
+    bfahid: Optional[int] = None
+    bfahname: Optional[str] = None
+    bfahvorname: Optional[str] = None
+    ffpwaehr: Optional[str] = None
+    lppwaehr: Optional[str] = None
+    aendstatus: Optional[str] = None
+    abteilung: Optional[int] = None
+    lkw: Optional[str] = None
+    anh: Optional[str] = None
+    bereich: Optional[int] = None
+    plombe1: Optional[str] = None
+    plombe2: Optional[str] = None
+    kmleer: Optional[float] = None
+    kmleermaut: Optional[float] = None
+    kmlastist: Optional[float] = None
+    kmleerist: Optional[float] = None
+
+    @validator("tlade_datum", "entbisdat", pre=True, each_item=True)
+    def parse_date(cls, value):
+        if isinstance(value, str):
+            return datetime.strptime(value, "%Y%m%d")
+        return value
+
+    @validator("tourzeit", "entbiszeit", pre=True, each_item=True)
+    def parse_time(cls, value):
+        if isinstance(value, str):
+            return datetime.strptime(value, "%H%M").time()
+        return value
+
+    @validator("aendstatus")
+    def validate_aendstatus(cls, value):
+        if value and value not in {"N", "A"}:
+            raise ValueError("Invalid Aendstatus value")
+        return value
