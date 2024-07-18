@@ -13,6 +13,7 @@ class SftpConfig(BaseModel):
     password: Optional[str] = None
     private_key: Optional[str] = None
     private_key_pass: Optional[str] = None
+    no_host_key: bool = False
     cnopts: Optional[pysftp.CnOpts] = None
 
     class Config:
@@ -24,6 +25,9 @@ class SftpBase:
     config: SftpConfig
 
     def __post_init__(self):
+        if self.config.no_host_key:
+            self.config.cnopts = pysftp.CnOpts()
+            self.config.cnopts.hostkeys = None
         conn = pysftp.Connection(
             host=self.config.host,
             port=self.config.port,
