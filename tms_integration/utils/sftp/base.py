@@ -5,7 +5,7 @@ import pysftp
 
 
 @dataclass
-class SftpBase(BaseModel):
+class SftpBase:
 
     class Credentials(BaseModel):
         host: str
