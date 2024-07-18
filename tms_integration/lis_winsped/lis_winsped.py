@@ -1,6 +1,7 @@
 import tempfile
+from tms_integration.utils.sftp import SftpBase
+
 from .models import LisIn
-from utils.sftp import SftpBase
 
 
 class LisWinSped(SftpBase):
