@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from datetime import datetime, time
 from pydantic import BaseModel
 
@@ -8,7 +8,7 @@ from .types import *
 class LisIn(BaseModel):
     start: Start
     records: List[RecordTypes] = []
-    ende: Ende
+    ende: Optional[Ende] = None
 
     def validate_records(self):
         raise NotImplemented
@@ -36,7 +36,8 @@ class LisIn(BaseModel):
         lines.append(self.model_to_line(self.start))
         for record in self.records:
             lines.append(self.model_to_line(record))
-        lines.append(self.model_to_line(self.ende))
+        if self.ende:
+            lines.append(self.model_to_line(self.ende))
 
         return "\n".join(lines)
 
