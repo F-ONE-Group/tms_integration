@@ -6,13 +6,13 @@ from datetime import datetime
 class Start(BaseModel):
     satzart: str = Field("START", const=True)
     referenz: str
-    erstellt: Optional[datetime] = None
+    erstellt: datetime
     eigiln: Optional[str] = None
     eigkreid: Optional[str] = None
-    eigname1: Optional[str] = None
+    eigname1: str
     expiln: Optional[str] = None
     expempid: Optional[str] = None
-    expname1: Optional[str] = None
+    expname1: str
     impart: Optional[int] = None
     maplfdnr: Optional[int] = None
     status: Optional[str] = None
