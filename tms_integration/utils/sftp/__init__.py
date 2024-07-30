@@ -1,1 +1,1 @@
-from .base import SftpBase
+from .base import SftpBase, SftpConfig
