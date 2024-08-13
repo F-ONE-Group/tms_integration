@@ -58,7 +58,7 @@ class SftpBase:
             cnopts=self.config.cnopts,
         ) as sftp:
             filename = os.path.basename(source_filepath)
-            dest_filepath = os.path.join(dest_path, filename)
+            dest_filepath = f"{dest_path}/{filename}"
             sftp.put(source_filepath, dest_filepath)
 
     def export_file(self, remote_filepath: str, local_filepath: str) -> None:
