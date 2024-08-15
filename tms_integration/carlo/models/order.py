@@ -1,5 +1,5 @@
 from typing import List, Optional
-from datetime import datetime
+from datetime import date, datetime
 
 from pydantic import BaseModel, validator
 import xml.etree.ElementTree as ET
@@ -95,10 +95,28 @@ class Customer(BaseCarloClass):
 class NormalOrder(BaseCarloClass):
     Action: XmlAttribute = "updateorcreate"
     ExternalNumber: str
-    Date: datetime
+    Date: date
     Info1: str = "Normal"
     Customer: Customer
     Consignments: List[Consignment]
+
+
+def remove_interim_tag(element: ET.Element, tag: str) -> None:
+    """Recursively remove an interim tag from the element and replace it with its children, which get the interim element's name."""
+    for child in list(
+        element
+    ):  # Convert to list to safely modify the tree during iteration
+        if child.tag == tag:
+            element.remove(child)  # Remove the interim element
+            for grandchild in list(child):  # Again, convert to list to safely iterate
+                grandchild.tag = (
+                    tag  # Rename the grandchild tag to the interim element's tag name
+                )
+                element.append(
+                    grandchild
+                )  # Append the grandchild to the parent element
+        else:
+            remove_interim_tag(child, tag)  # Recurse into child elements
 
 
 class NormalOrderData(BaseCarloClass):
@@ -107,6 +125,10 @@ class NormalOrderData(BaseCarloClass):
     def generate_xml(self) -> str:
         # Create the root element
         root = to_xml_element("NormalOrderData", self)
+
+        # Remove and replace tags according to Carlo schema
+        remove_interim_tag(root, "ConsignmentItems")
+        remove_interim_tag(root, "Consignments")
 
         # Generate the XML string
         xml_str = ET.tostring(root, encoding="utf-8").decode("utf-8")
