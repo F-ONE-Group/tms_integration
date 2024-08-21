@@ -116,7 +116,7 @@ class Auftrag(BaseModel):
         each_item=True,
         allow_reuse=True,
     )
-    def parse_date(cls, value, allow_reuse=True):
+    def parse_date(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%Y%m%d")
         return value
