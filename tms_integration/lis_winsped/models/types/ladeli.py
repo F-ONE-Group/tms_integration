@@ -11,15 +11,9 @@ class Ladeli(BaseModel):
     anhpolkz: Optional[str] = None
     fahid: Optional[int] = None
     fahname: Optional[str] = None
-    ffiln: Optional[str] = None
-    ffempid: Optional[str] = None
+    ffid: Optional[str] = None
     ffname: Optional[str] = None
-    abruf: Optional[str] = None
     tournr: Optional[str] = None
-    tsmittel: Optional[str] = None
-    exportiert: Optional[bool] = None
-    wtourid: Optional[int] = None
-    borderonr: Optional[str] = None
     tlade_datum: Optional[datetime] = None
     wechselbruecke1: Optional[str] = None
     wechselbruecke2: Optional[str] = None
@@ -27,7 +21,7 @@ class Ladeli(BaseModel):
     kmlast: Optional[float] = None
     kmmaut: Optional[float] = None
     dispo_user: Optional[str] = None
-    ffpausch: Optional[float] = None
+    ffpabsch: Optional[float] = None
     lkwgrpid: Optional[str] = None
     tourzeit: Optional[str] = None
     entbisdat: Optional[datetime] = None
@@ -45,7 +39,7 @@ class Ladeli(BaseModel):
     tourinfo8: Optional[str] = None
     tourinfo9: Optional[str] = None
     tourinfo10: Optional[str] = None
-    dispous: Optional[str] = None
+    dispoints: Optional[str] = None
     fahvorname: Optional[str] = None
     bfahid: Optional[int] = None
     bfahname: Optional[str] = None
@@ -64,13 +58,13 @@ class Ladeli(BaseModel):
     kmlastist: Optional[float] = None
     kmleerist: Optional[float] = None
 
-    @validator("tlade_datum", "entbisdat", pre=True, each_item=True)
+    @validator("tlade_datum", "entbisdat", pre=True, each_item=True, allow_reuse=True)
     def parse_date(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%Y%m%d")
         return value
 
-    @validator("tourzeit", "entbiszeit", pre=True, each_item=True)
+    @validator("tourzeit", "entbiszeit", pre=True, each_item=True, allow_reuse=True)
     def parse_time(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%H%M").time()

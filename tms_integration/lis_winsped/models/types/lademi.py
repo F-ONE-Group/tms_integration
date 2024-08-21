@@ -1,43 +1,41 @@
 from pydantic import BaseModel, Field, validator
-from typing import Optional
+from typing import Optional, Union
 from datetime import datetime
 
 
 class Lademi(BaseModel):
     satzart: str = Field("LADEMI", const=True)
-    referenz: Optional[str] = None
-    tladenr: Optional[str] = None
-    aufnr: Optional[int] = None
-    aufposnr: Optional[int] = None
+    referenz: str
+    tladenr: str
+    aufnr: Union[str, int]
+    aufposnr: Union[str, int]
     lademittelart: Optional[str] = None
-    anz: Optional[int] = None
-    lademittelid: Optional[str] = None
-    kostenst: Optional[str] = None
-    eigengewicht: Optional[float] = None
-    kumulierbarkeit: Optional[str] = None
-    pfand: Optional[float] = None
-    behaelter: Optional[str] = None
-    uebergabeart: Optional[str] = None
-    status: Optional[str] = None
-    belvorhandsdatum: Optional[datetime] = None
-    belvorhandzeit: Optional[str] = None
-    belabgeschlossen: Optional[str] = None
-    entvorhandsdatum: Optional[datetime] = None
-    entvorhandzeit: Optional[str] = None
-    entabgeschlossen: Optional[str] = None
-    tourdatum: Optional[datetime] = None
-    tourzeit: Optional[str] = None
+    palanz: Optional[Union[str, Union[str, int]]] = None
+    pal: Optional[str] = None
+    laenge: Optional[Union[str, float]] = None
+    breite: Optional[Union[str, float]] = None
+    hoehe: Optional[Union[str, float]] = None
+    eigengew: Optional[Union[str, float]] = None
+    nve: Optional[str] = None
+    lmart: Union[str, int]
+    waufragid: Optional[Union[str, int]] = None
+    waufposid: Optional[Union[str, int]] = None
+    einhgew: Optional[str] = None
+    einhlaenge: Optional[str] = None
+    einhbreite: Optional[str] = None
+    einhhoehe: Optional[str] = None
+    lageplatz: Optional[str] = None
 
-    @validator(
-        "belvorhandsdatum", "entvorhandsdatum", "tourdatum", pre=True, each_item=True
-    )
-    def parse_date(cls, value):
-        if isinstance(value, str):
-            return datetime.strptime(value, "%Y%m%d")
-        return value
+    # @validator(
+    #     "belvorhandsdatum", "entvorhandsdatum", "tourdatum", pre=True, each_item=True, allow_reuse=True
+    # )
+    # def parse_date(cls, value):
+    #     if isinstance(value, str):
+    #         return datetime.strptime(value, "%Y%m%d")
+    #     return value
 
-    @validator("belvorhandzeit", "entvorhandzeit", "tourzeit", pre=True, each_item=True)
-    def parse_time(cls, value):
-        if isinstance(value, str):
-            return datetime.strptime(value, "%H%M").time()
-        return value
+    # @validator("belvorhandzeit", "entvorhandzeit", "tourzeit", pre=True, each_item=True, allow_reuse=True)
+    # def parse_time(cls, value):
+    #     if isinstance(value, str):
+    #         return datetime.strptime(value, "%H%M").time()
+    #     return value
