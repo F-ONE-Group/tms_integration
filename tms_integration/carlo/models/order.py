@@ -70,7 +70,7 @@ class InformationClass(BaseCarloClass):
 
 
 class EditStatusClass(BaseCarloClass):
-    Matchcode: str = "335"
+    Matchcode: str = ""
 
 
 class Consignment(BaseCarloClass):
@@ -80,7 +80,7 @@ class Consignment(BaseCarloClass):
     Incoterms: int
     Receiver: Receiver
     Sender: Sender
-    ConsignmentItems: List[ConsignmentItem]
+    ConsignmentItems: Optional[List[ConsignmentItem]] = None
     ConsignmentReference1: Optional[str] = None
     ExternalNumber: Optional[str] = None
     ContainsDangerousGoods: Optional[bool] = None
@@ -96,7 +96,7 @@ class NormalOrder(BaseCarloClass):
     Action: XmlAttribute = "updateorcreate"
     ExternalNumber: str
     Date: date
-    Info1: str = "Normal"
+    Info1: str = ""
     Customer: Customer
     Consignments: List[Consignment]
 
