@@ -10,4 +10,4 @@ from .start import Start
 from .text import Text
 
 
-RecordTypes = Union[Auftrag, Ende, Ggut, Ladeli, Lademi, Posit, Start, Text]
+RecordTypes = Union[Auftrag, Ende, Ggut, Ladeli, Lademi, Posit, Start, Text, Adr]
