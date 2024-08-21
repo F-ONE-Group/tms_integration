@@ -5,10 +5,10 @@ from datetime import datetime
 
 class Lademi(BaseModel):
     satzart: str = Field("LADEMI", const=True)
-    referenz: str
-    tladenr: str
-    aufnr: Union[str, int]
-    aufposnr: Union[str, int]
+    referenz: Optional[str] = None
+    tladenr: Optional[str] = None
+    aufnr: Union[str, int, None] = None
+    aufposnr: Union[str, int, None] = None
     lademittelart: Optional[str] = None
     palanz: Optional[Union[str, Union[str, int]]] = None
     pal: Optional[str] = None

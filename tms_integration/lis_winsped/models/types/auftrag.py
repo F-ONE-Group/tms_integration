@@ -19,7 +19,8 @@ class Auftrag(BaseModel):
     entvonzeit: Optional[time] = None
     entbisdat: Optional[datetime] = None
     entbiszeit: Optional[time] = None
-    lagaufnr: Optional[str] = None
+    lagnr: Optional[str] = None
+    lagauftrag: Optional[str] = None
     verkart: Optional[str] = None
     frankatur: Optional[str] = None
     fnach: Optional[float] = None
@@ -46,14 +47,14 @@ class Auftrag(BaseModel):
     dispoinfo2: Optional[str] = None
     dispoinfo3: Optional[str] = None
     dispoinfo4: Optional[str] = None
-    ffpabsch: Optional[float] = None
-    fzpabsch: Optional[float] = None
+    ffpausch: Optional[float] = None
+    fzpausch: Optional[float] = None
     belfixdat: Optional[datetime] = None
     belfixzeit: Optional[time] = None
     entfixdat: Optional[datetime] = None
     entfixzeit: Optional[time] = None
     tmittel: Optional[int] = None
-    tvpabsch: Optional[float] = None
+    tvpausch: Optional[float] = None
     aufunternr: Optional[int] = None
     ablauf: Optional[int] = None
     aufart: Optional[str] = None
@@ -115,7 +116,7 @@ class Auftrag(BaseModel):
         each_item=True,
         allow_reuse=True,
     )
-    def parse_date(cls, value):
+    def parse_date(cls, value, allow_reuse=True):
         if isinstance(value, str):
             return datetime.strptime(value, "%Y%m%d")
         return value

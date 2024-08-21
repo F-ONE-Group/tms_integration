@@ -5,10 +5,10 @@ from datetime import datetime
 
 class Posit(BaseModel):
     satzart: str = Field("POSIT", const=True)
-    referenz: str
-    tladenr: str
-    aufnr: int
-    aufposnr: int
+    referenz: Optional[str] = None
+    tladenr: Optional[str] = None
+    aufnr: Optional[int] = None
+    aufposnr: Optional[int] = None
     refpos: Optional[str] = None
     tatsgew: Optional[Union[str, float]] = None
     fpflgew: Optional[Union[str, float]] = None
