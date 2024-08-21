@@ -5,11 +5,11 @@ from datetime import datetime
 
 class Adr(BaseModel):
     satzart: str = Field("ADR", const=True)
-    referenz: str
-    tladenr: str
-    aufnr: int
-    kunart: int
-    kundennr: int
+    referenz: Optional[str] = None
+    tladenr: Optional[str] = None
+    aufnr: Optional[int] = None
+    kunart: Optional[int] = None
+    kundennr: Optional[int] = None
     iln: Optional[str] = None
     name1: Optional[str] = None
     name2: Optional[str] = None
@@ -102,22 +102,3 @@ class Adr(BaseModel):
     bonitaet: Optional[str] = None
     bonitaetsgrenze: Optional[str] = None
     locode: Optional[str] = None
-
-
-    @validator("status")
-    def validate_status(cls, value):
-        if value and value not in {"A", "I"}:
-            raise ValueError("Invalid status value")
-        return value
-
-    @validator("email")
-    def validate_email(cls, value):
-        if value and "@" not in value:
-            raise ValueError("Invalid email address")
-        return value
-
-    @validator("plz")
-    def validate_plz(cls, value):
-        if value and not value.isdigit():
-            raise ValueError("Postal code must be numeric")
-        return value
