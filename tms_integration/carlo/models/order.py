@@ -73,6 +73,12 @@ class EditStatusClass(BaseCarloClass):
     Matchcode: str = ""
 
 
+class ConsignmentCustomFields(BaseCarloClass):
+    Action: XmlAttribute = "updateorcreate"
+    CustomTypeValue1: str = ""
+    ConsignmentReference1: str = ""
+
+
 class Consignment(BaseCarloClass):
     Number: int
     ConsignmentReference2: str
@@ -86,6 +92,7 @@ class Consignment(BaseCarloClass):
     ContainsDangerousGoods: Optional[bool] = None
     Information: Optional[InformationClass] = None
     EditStatus: Optional[EditStatusClass] = None
+    AdditionalFields: Optional[ConsignmentCustomFields] = None
 
 
 class Customer(BaseCarloClass):
