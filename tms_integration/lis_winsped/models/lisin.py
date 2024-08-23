@@ -18,7 +18,7 @@ class LisIn(BaseModel):
         fields = []
         for field_key in model.__fields__.keys():
             field_value = model.dict().get(field_key)
-            if field_value:
+            if field_value is not None:
                 if isinstance(field_value, datetime):
                     fields.append(field_value.strftime("%Y%m%d"))
                 elif isinstance(field_value, time):
