@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Any, Optional, Union
 import xml.etree.ElementTree as ET
 from pydantic import BaseModel
+import pytz
 
 
 class XmlAttribute:
@@ -32,8 +33,19 @@ def to_xml_element(
             if child_element is not None:
                 element.append(child_element)
     elif isinstance(value, datetime):
+        if value.tzinfo is None:
+            # Assume CET/CEST
+            cet = pytz.timezone("Europe/Berlin")
+            value = cet.localize(value)
+
+        # Format the datetime explicitly
+        iso_format = value.strftime("%Y-%m-%dT%H:%M:%S%z")
+        iso_format = (
+            iso_format[:-2] + ":" + iso_format[-2:]
+        )  # Add colon in the timezone part
+
         element = ET.Element(tag)
-        element.text = value.isoformat()
+        element.text = iso_format
     elif value is None:
         return None
     else:
