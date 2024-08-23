@@ -59,10 +59,10 @@ class ConsignmentItem(BaseCarloClass):
 
 
 class Times(BaseCarloClass):
-    LieferdatumStart: datetime
-    LieferdatumEnd: datetime
-    LadedatumStart: datetime
-    LadedatumEnd: datetime
+    LieferdatumStart: Optional[datetime] = None
+    LieferdatumEnd: Optional[datetime] = None
+    LadedatumStart: Optional[datetime] = None
+    LadedatumEnd: Optional[datetime] = None
 
 
 class InformationClass(BaseCarloClass):
