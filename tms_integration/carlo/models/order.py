@@ -93,6 +93,8 @@ class Consignment(BaseCarloClass):
     Information: Optional[InformationClass] = None
     EditStatus: Optional[EditStatusClass] = None
     AdditionalFields: Optional[ConsignmentCustomFields] = None
+    Matchcode: Optional[str] = None
+
 
 
 class Customer(BaseCarloClass):
