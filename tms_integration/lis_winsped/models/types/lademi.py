@@ -10,7 +10,7 @@ class Lademi(BaseModel):
     aufnr: Union[str, int, None] = None
     aufposnr: Union[str, int, None] = None
     lademittelart: Optional[str] = None
-    palanz: Optional[Union[str, Union[str, int]]] = None
+    palanz: Optional[int] = None
     pal: Optional[str] = None
     laenge: Optional[Union[str, float]] = None
     breite: Optional[Union[str, float]] = None
