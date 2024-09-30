@@ -10,6 +10,8 @@ from .start import Start
 from .text import Text
 from .geb import Geb
 from .dmsdok import DmsDok
+from .dmsref import DmsRef
+from .dmssw import DmsSw
 
 
 RecordTypes = Union[
@@ -24,4 +26,6 @@ RecordTypes = Union[
     Adr,
     Geb,
     DmsDok,
+    DmsRef,
+    DmsSw,
 ]

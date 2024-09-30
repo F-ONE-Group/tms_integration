@@ -3,7 +3,7 @@ from typing import Optional
 
 
 class DmsDok(BaseModel):
-    satzart: str = Field("DMSDOK“", const=True)
+    satzart: str = Field("DMSDOK", const=True)
     referenz: str
     dmsdoknr: int
     archiv: str

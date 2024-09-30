@@ -50,3 +50,13 @@ class LisInAuftrag(LisIn):
         types_missing = set(self.mandatory_records_type) - records_type
         if types_missing:
             raise ValueError(f"Some mandatory types are missing: {types_missing}")
+
+
+class LisInDMS(LisIn):
+    mandatory_records_type: List = [DmsDok, DmsRef, DmsSw]
+
+    def validate_records(self):
+        records_type = {type(r) for r in self.records}
+        types_missing = set(self.mandatory_records_type) - records_type
+        if types_missing:
+            raise ValueError(f"Some mandatory types are missing: {types_missing}")
