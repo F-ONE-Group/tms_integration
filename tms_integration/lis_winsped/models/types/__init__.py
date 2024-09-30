@@ -9,6 +9,19 @@ from .posit import Posit
 from .start import Start
 from .text import Text
 from .geb import Geb
+from .dmsdok import DmsDok
 
 
-RecordTypes = Union[Auftrag, Ende, Ggut, Ladeli, Lademi, Posit, Start, Text, Adr, Geb]
+RecordTypes = Union[
+    Auftrag,
+    Ende,
+    Ggut,
+    Ladeli,
+    Lademi,
+    Posit,
+    Start,
+    Text,
+    Adr,
+    Geb,
+    DmsDok,
+]
