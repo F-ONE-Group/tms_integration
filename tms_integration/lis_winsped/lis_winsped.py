@@ -22,9 +22,7 @@ class LisWinSped(SftpBase):
             tmp_file.close()
             self.import_file(tmp_file.name, self.import_dest_folder)
 
-    def import_documents(
-        self, dms_payload, files: List[str], import_prefix: str = None
-    ):
+    def import_document(self, dms_payload, file: str, import_prefix: str = None):
         with tempfile.NamedTemporaryFile(
             mode="w",
             encoding="utf-8",
@@ -36,9 +34,8 @@ class LisWinSped(SftpBase):
             tmp_file.close()
             self.import_file(tmp_file.name, self.import_dest_folder)
 
-        # send the files as well
-        for file in files:
-            self.import_file(file, self.import_dest_folder)
+        # send the file as well
+        self.import_file(file, self.import_dest_folder)
 
     def export_auftrag(self):
         raise NotImplementedError
