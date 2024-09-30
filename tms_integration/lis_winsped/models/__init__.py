@@ -1,1 +1,1 @@
-from .lisin import LisIn, LisInAuftrag
+from .lisin import LisIn, LisInAuftrag, LisInDMS
