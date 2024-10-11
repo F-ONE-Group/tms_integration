@@ -98,4 +98,8 @@ class Posit(BaseModel):
     def validate_boolean(cls, value):
         if value not in {None, True, False}:
             raise ValueError("Invalid boolean value")
+        if value == False:
+            return "N"  # Nein
+        elif value == True:
+            return "J"  # Ja
         return value

@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel, Field, validator
+from typing import Optional, Union
 
 
 class Ggut(BaseModel):
@@ -44,3 +44,13 @@ class Ggut(BaseModel):
     freimenge: Optional[str] = None
     vertraeggr: Optional[str] = None
     umweltgef: Optional[bool] = None
+
+    @validator("umweltgef")
+    def validate_boolean(cls, value):
+        if value not in {None, True, False}:
+            raise ValueError("Invalid boolean value")
+        if value == False:
+            return "N"  # Nein
+        elif value == True:
+            return "J"  # Ja
+        return value

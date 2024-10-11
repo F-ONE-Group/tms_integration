@@ -66,7 +66,6 @@ class SftpBase:
         Export a file from a remote SFTP server using the provided credentials.
 
         Args:
-            credentials (Credentials): The credentials needed to connect to the SFTP server.
             remote_filepath (str): The file path on the remote SFTP server.
             local_filepath (str): The local file path where the downloaded file will be saved.
         """
@@ -80,3 +79,47 @@ class SftpBase:
             cnopts=self.config.cnopts,
         ) as sftp:
             sftp.get(remote_filepath, local_filepath)
+
+    def get_all_files(self, remote_folder: str):
+        """Export all the files from a specific remove SFTP direction using the provided credentials
+
+        Args:
+            remote_folder (str): The directory from which the files should be taken
+            local_folder (str): The local folder path where the downloaded files will be saved.
+        """
+        remote_files = []
+
+        with pysftp.Connection(
+            host=self.config.host,
+            port=self.config.port,
+            username=self.config.username,
+            password=self.config.password,
+            private_key=self.config.private_key,
+            private_key_pass=self.config.private_key_pass,
+            cnopts=self.config.cnopts,
+        ) as sftp:
+            with sftp.cd(remote_folder):
+                files = sftp.listdir()
+                for file_name in files:
+                    remote_filepath = f"{remote_folder}/{file_name}"
+                    remote_files.append(remote_filepath)
+
+        return remote_files
+
+    def delete_file(self, remote_filepath: str):
+        """Remove a file from a remote SFTP sever
+
+        Args:
+            remote_filepath (str): the file path ont he remove SFTP sever
+        """
+        with pysftp.Connection(
+            host=self.config.host,
+            port=self.config.port,
+            username=self.config.username,
+            password=self.config.password,
+            private_key=self.config.private_key,
+            private_key_pass=self.config.private_key_pass,
+            cnopts=self.config.cnopts,
+        ) as sftp:
+            if sftp.exists(remote_filepath):
+                sftp.remove(remote_filepath)

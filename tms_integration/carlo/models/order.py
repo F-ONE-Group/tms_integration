@@ -96,7 +96,6 @@ class Consignment(BaseCarloClass):
     Matchcode: Optional[str] = None
 
 
-
 class Customer(BaseCarloClass):
     GlobalLocationNumber: str
 

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, validator
-from typing import Optional
+from typing import Optional, Union
 from datetime import datetime
 
 
@@ -80,4 +80,14 @@ class Ladeli(BaseModel):
     def validate_aendstatus(cls, value):
         if value and value not in {"N", "A"}:
             raise ValueError("Invalid Aendstatus value")
+        return value
+
+    @validator("exportiert")
+    def validate_boolean(cls, value):
+        if value not in {None, True, False}:
+            raise ValueError("Invalid boolean value")
+        if value == False:
+            return "N"  # Nein
+        elif value == True:
+            return "J"  # Ja
         return value

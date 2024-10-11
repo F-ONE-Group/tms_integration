@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field, validator
 from typing import Optional
-from datetime import datetime
 
 
 class Adr(BaseModel):
@@ -102,3 +101,13 @@ class Adr(BaseModel):
     bonitaet: Optional[str] = None
     bonitaetsgrenze: Optional[str] = None
     locode: Optional[str] = None
+
+    @validator("sperre")
+    def validate_boolean(cls, value):
+        if value not in {None, True, False}:
+            raise ValueError("Invalid boolean value")
+        if value == False:
+            return "N"  # Nein
+        elif value == True:
+            return "J"  # Ja
+        return value
