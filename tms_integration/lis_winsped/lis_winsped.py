@@ -41,7 +41,9 @@ class LisWinSped(SftpBase):
         # send the file as well
         self.import_file(file, self.import_dest_folder)
 
-    def export_auftrag(self, identifier: str) -> Union[None, Tuple[str, str]]:
+    def export_auftrag(
+        self, identifier: str
+    ) -> Union[Tuple[None, None], Tuple[str, str]]:
         output_files = self.get_all_files(self.output_target_folder)
         dest_path = os.path.join(os.getcwd(), "tmp", "output")
         if os.path.exists(dest_path):
@@ -54,3 +56,5 @@ class LisWinSped(SftpBase):
                 text = txt.read()
                 if identifier in text:
                     return (file, text)
+
+        return None, None
