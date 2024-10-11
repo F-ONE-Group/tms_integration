@@ -1,5 +1,8 @@
+import os
+import shutil
 import tempfile
-from typing import List
+
+from typing import Union, Tuple
 from pydantic.dataclasses import dataclass
 from tms_integration.utils.sftp import SftpBase
 
@@ -9,6 +12,7 @@ from .models import LisIn
 @dataclass
 class LisWinSped(SftpBase):
     import_dest_folder: str
+    output_target_folder: str
 
     def import_auftrag(self, payload: LisIn, import_prefix: str = None):
         with tempfile.NamedTemporaryFile(
@@ -37,5 +41,16 @@ class LisWinSped(SftpBase):
         # send the file as well
         self.import_file(file, self.import_dest_folder)
 
-    def export_auftrag(self):
-        raise NotImplementedError
+    def export_auftrag(self, identifier: str) -> Union[None, Tuple[str, str]]:
+        output_files = self.get_all_files(self.output_target_folder)
+        dest_path = os.path.join(os.getcwd(), "tmp", "output")
+        if os.path.exists(dest_path):
+            shutil.rmtree(dest_path)
+        os.makedirs(dest_path)
+        for file in output_files:
+            filename = os.path.basename(file)
+            self.export_file(file, os.path.join(dest_path, filename))
+            with open(os.path.join(dest_path, filename), "r") as txt:
+                text = txt.read()
+                if identifier in text:
+                    return (file, text)
