@@ -52,7 +52,7 @@ class LisWinSped(SftpBase):
         for file in output_files:
             filename = os.path.basename(file)
             self.export_file(file, os.path.join(dest_path, filename))
-            with open(os.path.join(dest_path, filename), "r") as txt:
+            with open(os.path.join(dest_path, filename), "r",encoding="cp1252") as txt:
                 text = txt.read()
                 if identifier in text:
                     return (file, text)
