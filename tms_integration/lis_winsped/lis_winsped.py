@@ -17,7 +17,7 @@ class LisWinSped(SftpBase):
     def import_auftrag(self, payload: LisIn, import_prefix: str = None):
         with tempfile.NamedTemporaryFile(
             mode="w",
-            encoding="utf-8",
+            encoding="windows-1252", # FORCE ANSI encoding
             prefix=import_prefix,
             suffix=".txt",
             delete=False,
@@ -29,7 +29,7 @@ class LisWinSped(SftpBase):
     def import_document(self, dms_payload, file: str, import_prefix: str = None):
         with tempfile.NamedTemporaryFile(
             mode="w",
-            encoding="utf-8",
+            encoding="windows-1252", # FORCE ANSI encoding
             prefix=import_prefix,
             suffix=".txt",
             delete=False,
