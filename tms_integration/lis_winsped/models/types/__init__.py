@@ -12,6 +12,7 @@ from .geb import Geb
 from .dmsdok import DmsDok
 from .dmsref import DmsRef
 from .dmssw import DmsSw
+from .status import Status
 
 
 RecordTypes = Union[
@@ -28,4 +29,5 @@ RecordTypes = Union[
     DmsDok,
     DmsRef,
     DmsSw,
+    Status,
 ]
