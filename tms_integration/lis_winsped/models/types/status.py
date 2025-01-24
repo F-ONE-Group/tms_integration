@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 class Status(BaseModel):
     satzart: str = Field("STATUS", const=True)
-    referez: str
+    referenz: str
     tladenr: str
     aufnr: int
     aufposnr: Optional[int] = None
@@ -15,8 +15,8 @@ class Status(BaseModel):
     diffmenge: Optional[float] = None
     diffeinh: Optional[str] = None
     hinweis: Optional[str] = None
-    statusdat: datetime
-    statuszeit: time
+    statusdat: Optional[datetime]
+    statuszeit: Optional[time]
     ean: Optional[str] = None
     refnr: Optional[str] = None
     ffnr: Optional[int] = None
