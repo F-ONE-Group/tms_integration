@@ -2,7 +2,7 @@ import os
 import shutil
 import tempfile
 
-from typing import Union, Tuple
+from typing import Union, Tuple, List
 from pydantic.dataclasses import dataclass
 from tms_integration.utils.sftp import SftpBase
 
@@ -17,7 +17,7 @@ class LisWinSped(SftpBase):
     def import_auftrag(self, payload: LisIn, import_prefix: str = None):
         with tempfile.NamedTemporaryFile(
             mode="w",
-            encoding="windows-1252", # FORCE ANSI encoding
+            encoding="cp1252",  # FORCE ANSI encoding
             prefix=import_prefix,
             suffix=".txt",
             delete=False,
@@ -29,7 +29,7 @@ class LisWinSped(SftpBase):
     def import_document(self, dms_payload, file: str, import_prefix: str = None):
         with tempfile.NamedTemporaryFile(
             mode="w",
-            encoding="windows-1252", # FORCE ANSI encoding
+            encoding="cp1252",  # FORCE ANSI encoding
             prefix=import_prefix,
             suffix=".txt",
             delete=False,
@@ -52,9 +52,26 @@ class LisWinSped(SftpBase):
         for file in output_files:
             filename = os.path.basename(file)
             self.export_file(file, os.path.join(dest_path, filename))
-            with open(os.path.join(dest_path, filename), "r",encoding="cp1252") as txt:
+            with open(os.path.join(dest_path, filename), "r", encoding="cp1252") as txt:
                 text = txt.read()
                 if identifier in text:
                     return (file, text)
 
         return None, None
+
+    def export_auftrag_tour(self, identifier: str) -> List[Tuple[str, str]]:
+        output: List[Tuple[str, str]] = []
+        output_files = self.get_all_files(self.output_target_folder)
+        dest_path = os.path.join(os.getcwd(), "tmp", "output")
+        if os.path.exists(dest_path):
+            shutil.rmtree(dest_path)
+        os.makedirs(dest_path)
+        for file in output_files:
+            filename = os.path.basename(file)
+            self.export_file(file, os.path.join(dest_path, filename))
+            with open(os.path.join(dest_path, filename), "r", encoding="cp1252") as txt:
+                text = txt.read()
+                if identifier in text:
+                    output.append((file, text))
+
+        return output
