@@ -73,7 +73,7 @@ class Ladeli(BaseModel):
     @validator("tourzeit", "entbiszeit", pre=True, each_item=True, allow_reuse=True)
     def parse_time(cls, value):
         if isinstance(value, str):
-            return datetime.strptime(value, "%H%M").time()
+            return datetime.strptime(value, "%H%M").time().strftime("%H%M")
         return value
 
     @validator("aendstatus")
