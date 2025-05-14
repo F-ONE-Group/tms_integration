@@ -1,7 +1,7 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 from datetime import date, datetime
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 import xml.etree.ElementTree as ET
 from xml.dom.minidom import parseString
 
@@ -12,8 +12,9 @@ class BaseCarloClass(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    @validator("Action", pre=True, check_fields=False)
-    def set_action(cls, v):
+    @field_validator("Action", mode="before")
+    @classmethod
+    def set_action(cls, v: Any) -> Any:
         return XmlAttribute(v)
 
 

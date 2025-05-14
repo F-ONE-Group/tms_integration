@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field, validator
-from typing import Optional, Union
+from pydantic import BaseModel, field_validator
+from typing import Optional, Literal
 from datetime import datetime
 
 
 class Ladeli(BaseModel):
-    satzart: str = Field("LADELI", const=True)
+    satzart: Literal["LADELI"] = "LADELI"
     referenz: str
     tladenr: str
     lkwpolkz: Optional[str] = None
@@ -17,7 +17,7 @@ class Ladeli(BaseModel):
     abruf: Optional[str] = None
     tournr: Optional[str] = None
     tsmittel: Optional[str] = None
-    exportiert: Optional[bool] = None
+    exportiert: Optional[str] = None  # Changed from Optional[bool] → Optional[str]
     wtourid: Optional[int] = None
     borderonr: Optional[str] = None
     tlade_datum: Optional[datetime] = None
@@ -64,30 +64,34 @@ class Ladeli(BaseModel):
     kmlastist: Optional[float] = None
     kmleerist: Optional[float] = None
 
-    @validator("tlade_datum", "entbisdat", pre=True, each_item=True, allow_reuse=True)
+    @field_validator("tlade_datum", "entbisdat", mode="before")
+    @classmethod
     def parse_date(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%Y%m%d")
         return value
 
-    @validator("tourzeit", "entbiszeit", pre=True, each_item=True, allow_reuse=True)
+    @field_validator("tourzeit", "entbiszeit", mode="before")
+    @classmethod
     def parse_time(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%H%M").time().strftime("%H%M")
         return value
 
-    @validator("aendstatus")
+    @field_validator("aendstatus")
+    @classmethod
     def validate_aendstatus(cls, value):
         if value and value not in {"N", "A"}:
             raise ValueError("Invalid Aendstatus value")
         return value
 
-    @validator("exportiert")
-    def validate_boolean(cls, value):
-        if value not in {None, True, False}:
-            raise ValueError("Invalid boolean value")
-        if value == False:
-            return "N"  # Nein
-        elif value == True:
-            return "J"  # Ja
-        return value
+    @field_validator("exportiert")
+    @classmethod
+    def validate_exportiert(cls, value):
+        if value in {True, "J", "j"}:
+            return "J"
+        elif value in {False, "N", "n"}:
+            return "N"
+        elif value is None:
+            return None
+        raise ValueError("exportiert must be 'J', 'N', True, False or None")

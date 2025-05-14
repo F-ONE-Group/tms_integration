@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field, validator
-from typing import Optional
+from pydantic import BaseModel, field_validator
+from typing import Optional, Literal
 from datetime import datetime, time
 
 
 class Auftrag(BaseModel):
-    satzart: str = Field("AUFTR", const=True)
+    satzart: Literal["AUFTR"] = "AUFTR"
     referenz: str
     tladenr: str
     aufnr: Optional[int] = None
@@ -98,7 +98,7 @@ class Auftrag(BaseModel):
     kontotab: Optional[int] = None
     dlaart: Optional[str] = None
 
-    @validator(
+    @field_validator(
         "aufdatum",
         "belvondat",
         "belbisdat",
@@ -112,16 +112,15 @@ class Auftrag(BaseModel):
         "entsolldatbis",
         "belfixdatbis",
         "entfixdatbis",
-        pre=True,
-        each_item=True,
-        allow_reuse=True,
+        mode="before",
     )
+    @classmethod
     def parse_date(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%Y%m%d")
         return value
 
-    @validator(
+    @field_validator(
         "belvonzeit",
         "belbiszeit",
         "entvonzeit",
@@ -134,21 +133,23 @@ class Auftrag(BaseModel):
         "entsollzeitbis",
         "belfixzeitbis",
         "entfixzeitbis",
-        pre=True,
-        each_item=True,
+        mode="before",
     )
+    @classmethod
     def parse_time(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%H%M").time()
         return value
 
-    @validator("aendstatus")
+    @field_validator("aendstatus")
+    @classmethod
     def validate_aendstatus(cls, value):
         if value and value not in {"N", "A", "L", "W"}:
             raise ValueError("Invalid Aendstatus value")
         return value
 
-    @validator("bar", "gefahrgut", "kuehlgut", "direkt", "umweltgef")
+    @field_validator("bar", "gefahrgut", "kuehlgut", "direkt", "umweltgef")
+    @classmethod
     def validate_boolean(cls, value):
         if value not in {None, True, False}:
             raise ValueError("Invalid boolean value")

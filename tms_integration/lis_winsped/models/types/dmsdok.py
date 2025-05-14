@@ -1,9 +1,9 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel
+from typing import Literal, Optional
 
 
 class DmsDok(BaseModel):
-    satzart: str = Field("DMSDOK", const=True)
+    satzart: Literal["DMSDOK"] = "DMSDOK"
     referenz: str
     dmsdoknr: int
     archiv: str

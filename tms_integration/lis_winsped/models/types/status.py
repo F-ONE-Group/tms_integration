@@ -1,10 +1,10 @@
 from datetime import datetime, time
-from typing import Optional
+from typing import Literal, Optional
 from pydantic import BaseModel, Field
 
 
 class Status(BaseModel):
-    satzart: str = Field("STATUS", const=True)
+    satzart: Literal["STATUS"] = "STATUS"
     referenz: str
     tladenr: str
     aufnr: int

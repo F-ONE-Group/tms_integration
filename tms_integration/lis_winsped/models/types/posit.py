@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field, validator
-from typing import Optional, Union
+from pydantic import BaseModel, field_validator
+from typing import Optional, Union, Literal
 from datetime import datetime
 
 
 class Posit(BaseModel):
-    satzart: str = Field("POSIT", const=True)
+    satzart: Literal["POSIT"] = "POSIT"
     referenz: Optional[str] = None
     tladenr: Optional[str] = None
     aufnr: Optional[int] = None
@@ -75,31 +75,34 @@ class Posit(BaseModel):
     sollspanz: Optional[Union[str, float]] = None
     beltxt: Optional[str] = None
     leergut: Optional[int] = None
-    umweltgef: Optional[bool] = None
+    umweltgef: Optional[str] = None  # Changed from Optional[bool]
     curhilf3: Optional[Union[str, float]] = None
     curhilf4: Optional[Union[str, float]] = None
     curhilf5: Optional[Union[str, float]] = None
     curhilf6: Optional[Union[str, float]] = None
     curhilf7: Optional[Union[str, float]] = None
 
-    @validator("dtmhilf1", "dtmhilf2", pre=True, each_item=True)
+    @field_validator("dtmhilf1", "dtmhilf2", mode="before")
+    @classmethod
     def parse_datetime(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%Y%m%d")
         return value
 
-    @validator("aendstatus")
+    @field_validator("aendstatus")
+    @classmethod
     def validate_aendstatus(cls, value):
         if value and value not in {"N", "A", "L"}:
             raise ValueError("Invalid Aendstatus value")
         return value
 
-    @validator("umweltgef")
-    def validate_boolean(cls, value):
-        if value not in {None, True, False}:
-            raise ValueError("Invalid boolean value")
-        if value == False:
-            return "N"  # Nein
-        elif value == True:
-            return "J"  # Ja
-        return value
+    @field_validator("umweltgef")
+    @classmethod
+    def validate_umweltgef(cls, value):
+        if value in {True, "J", "j"}:
+            return "J"
+        elif value in {False, "N", "n"}:
+            return "N"
+        elif value is None:
+            return None
+        raise ValueError("umweltgef must be 'J', 'N', True, False or None")
