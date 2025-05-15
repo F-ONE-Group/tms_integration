@@ -23,10 +23,13 @@ carlo_requirements = get_requirements(
 
 setup(
     name="tms_integration",
-    version="0.1.0",
+    version="0.1.1",
     description="A library for TMS integration",
-    author="Your Name",
-    author_email="your.email@example.com",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    author="F-ONE Group",
+    author_email="admin@f-one.group",
+    url="https://github.com/F-ONE-Group/tms_integration/tree/pypi",
     packages=find_packages(exclude=["tests*"]),
     install_requires=base_requirements,
     extras_require={
