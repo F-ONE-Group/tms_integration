@@ -1,5 +1,5 @@
 from pydantic import BaseModel, field_validator
-from typing import Optional, Literal
+from typing import Optional, Literal, Union
 from datetime import datetime
 
 
@@ -17,7 +17,7 @@ class Ladeli(BaseModel):
     abruf: Optional[str] = None
     tournr: Optional[str] = None
     tsmittel: Optional[str] = None
-    exportiert: Optional[str] = None  # Changed from Optional[bool] → Optional[str]
+    exportiert: Optional[Union[str, bool]] = None
     wtourid: Optional[int] = None
     borderonr: Optional[str] = None
     tlade_datum: Optional[datetime] = None

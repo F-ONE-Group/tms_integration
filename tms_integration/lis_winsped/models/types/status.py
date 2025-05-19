@@ -15,8 +15,8 @@ class Status(BaseModel):
     diffmenge: Optional[float] = None
     diffeinh: Optional[str] = None
     hinweis: Optional[str] = None
-    statusdat: Optional[datetime]
-    statuszeit: Optional[time]
+    statusdat: Optional[datetime] = None
+    statuszeit: Optional[time] = None
     ean: Optional[str] = None
     refnr: Optional[str] = None
     ffnr: Optional[int] = None
