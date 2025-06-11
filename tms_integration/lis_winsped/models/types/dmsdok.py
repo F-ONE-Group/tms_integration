@@ -10,4 +10,4 @@ class DmsDok(BaseModel):
     ordner: str
     doktyp: str
     quellpfad: str
-    aendstatus: Optional[str]
+    aendstatus: Optional[str] = None

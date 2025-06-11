@@ -8,7 +8,7 @@ class DmsRef(BaseModel):
     dmsdoknr: int
     dmsrefnr: int
     aufnr: int
-    kundennr: Optional[str]
-    liefnr: Optional[str]
-    refnr: Optional[str]
-    kommnr: Optional[str]
+    kundennr: Optional[str] = None
+    liefnr: Optional[str] = None
+    refnr: Optional[str] = None
+    kommnr: Optional[str] = None
