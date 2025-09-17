@@ -23,7 +23,7 @@ carlo_requirements = get_requirements(
 
 setup(
     name="tms_integration",
-    version="0.1.4",
+    version="0.1.5",
     description="A library for TMS integration",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
