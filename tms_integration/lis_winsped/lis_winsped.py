@@ -28,7 +28,9 @@ class LisWinSped(SftpBase):
 
     def import_document(
         self, dms_payload, file: str, import_prefix: str | None = None
-    ) -> str:
+    ) -> Tuple[str, str]:
+        """Returns the generated import file name and text."""
+        import_file_name: str = ""
         import_file_text: str = ""
         with tempfile.NamedTemporaryFile(
             mode="w",
@@ -37,15 +39,16 @@ class LisWinSped(SftpBase):
             suffix=".txt",
             delete=False,
         ) as tmp_file:
+            import_file_name = tmp_file.name
             import_file_text = dms_payload.generate_txt()
             tmp_file.write(import_file_text)
             tmp_file.close()
-            self.import_file(tmp_file.name, self.import_dest_folder)
-
+            self.import_file(import_file_name, self.import_dest_folder)
+        
         # send the file as well
         self.import_file(file, self.import_dest_folder)
 
-        return import_file_text
+        return import_file_name, import_file_text
 
     def export_auftrag(
         self, identifier: str
