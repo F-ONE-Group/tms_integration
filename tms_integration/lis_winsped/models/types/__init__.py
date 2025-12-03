@@ -13,6 +13,7 @@ from .dmsdok import DmsDok
 from .dmsref import DmsRef
 from .dmssw import DmsSw
 from .status import Status
+from .custom import CustomModel
 
 
 RecordTypes = Union[
@@ -30,4 +31,5 @@ RecordTypes = Union[
     DmsRef,
     DmsSw,
     Status,
+    CustomModel,
 ]
