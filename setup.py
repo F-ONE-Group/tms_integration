@@ -20,10 +20,13 @@ lis_winsped_requirements = get_requirements(
 carlo_requirements = get_requirements(
     os.path.join("tms_integration", "carlo", "requirements.txt")
 )
+windispo_requirements = get_requirements(
+    os.path.join("tms_integration", "windispo", "requirements.txt")
+)
 
 setup(
     name="tms_integration",
-    version="0.2.3",
+    version="0.3.0",
     description="A library for TMS integration",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -35,6 +38,7 @@ setup(
     extras_require={
         "lis_winsped": lis_winsped_requirements,
         "carlo": carlo_requirements,
+        "windispo": windispo_requirements,
     },
     classifiers=[
         "Programming Language :: Python :: 3",

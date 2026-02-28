@@ -5,6 +5,7 @@ Welcome to the F-ONE Group TMS Integration package! This Python library is desig
 ## Features
 - **Lis Winsped Integration**: Comprehensive support for integrating with the Lis Winsped TMS, including models and utilities for handling various data types.
 - **Carlo Integration**: (Coming soon) Future support for the Carlo TMS platform.
+- **Windispo Integration**: XML import file generation for `createjob.v1` payloads and SFTP-based import support.
 - **Utilities**: Includes XML handling and SFTP utilities to simplify data transfer and processing.
 
 ## Installation
@@ -36,6 +37,10 @@ The library is organized into the following modules:
 
 ### Carlo (Coming Soon)
 - Planned support for Carlo TMS integration.
+
+### Windispo
+- `createjob.v1` XML import generation with typed payload models.
+- SFTP import helper for transferring generated XML files.
 
 ### Utilities
 - XML handling utilities.
