@@ -25,7 +25,8 @@ class SftpConfig(BaseModel):
 @dataclass
 class SftpBase:
     config: SftpConfig
-
+    
+    @on_exception(expo, SSHException, max_tries=5)
     def __post_init__(self):
         if self.config.no_host_key:
             self.config.cnopts = pysftp.CnOpts()
