@@ -26,7 +26,7 @@ windispo_requirements = get_requirements(
 
 setup(
     name="tms_integration",
-    version="0.3.1",
+    version="1.0.0",
     description="A library for TMS integration",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
