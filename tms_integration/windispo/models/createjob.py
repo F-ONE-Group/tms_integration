@@ -25,6 +25,7 @@ class WindispoHeader(WindispoBaseModel):
 class WindispoJobDetail(WindispoBaseModel):
     z_nr: int = Field(alias="ZNr")
     laden: int = Field(alias="Laden")
+    ladeadressen_nr: Optional[int] = Field(default=None, alias="LadeadressenNr")  # Existing address number
     anrede: Optional[str] = Field(default=None, alias="Anrede")
     name1: str = Field(alias="Name1")
     name2: Optional[str] = Field(default=None, alias="Name2")
@@ -48,6 +49,7 @@ class WindispoJobDetail(WindispoBaseModel):
     container_nr2: Optional[str] = Field(default=None, alias="ContainerNr2")
     geo_lat: Optional[str] = Field(default=None, alias="GeoLat")
     geo_lng: Optional[str] = Field(default=None, alias="GeoLng")
+
 
 
 class WindispoFile(WindispoBaseModel):
