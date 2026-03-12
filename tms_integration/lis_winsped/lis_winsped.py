@@ -18,15 +18,30 @@ class LisWinSped(SftpBase):
     import_dest_folder: str
     output_target_folder: str
 
+    def _sanitize_cp1252(self, text: str) -> str:
+        """Replace unicode chars with cp1252-safe equivalents."""
+        replacements = {
+            "→": "->",
+            "←": "<-",
+            "↔": "<->",
+            "…": "...",
+            "–": "-",
+            "—": "--",
+        }
+        for char, repl in replacements.items():
+            text = text.replace(char, repl)
+        return text
+
     def import_auftrag(self, payload: LisIn, import_prefix: str = None):
         with tempfile.NamedTemporaryFile(
             mode="w",
             encoding="cp1252",  # FORCE ANSI encoding
+            errors="replace",  # Replace unencodable characters with ?
             prefix=import_prefix,
             suffix=".txt",
             delete=False,
         ) as tmp_file:
-            tmp_file.write(payload.generate_txt())
+            tmp_file.write(self._sanitize_cp1252(payload.generate_txt()))
             tmp_file.close()
             self.import_file(tmp_file.name, self.import_dest_folder)
 
@@ -48,7 +63,7 @@ class LisWinSped(SftpBase):
             tmp_file.write(import_file_text)
             tmp_file.close()
             self.import_file(import_file_name, self.import_dest_folder)
-        
+
         # send the file as well
         self.import_file(file, self.import_dest_folder)
 
