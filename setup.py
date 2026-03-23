@@ -34,6 +34,10 @@ setup(
     author_email="admin@f-one.group",
     url="https://github.com/F-ONE-Group/tms_integration/tree/pypi",
     packages=find_packages(exclude=["tests*"]),
+    include_package_data=True,
+    package_data={
+        "tms_integration.carlo.models": ["xsd/*.xsd"],
+    },
     install_requires=base_requirements,
     extras_require={
         "lis_winsped": lis_winsped_requirements,
