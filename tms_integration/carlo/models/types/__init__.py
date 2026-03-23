@@ -1,8 +1,6 @@
-"""Carlo TMS integration models based on FOneOrderImport-v3.xsd."""
+"""Types for Carlo TMS integration based on FOneOrderImport-v3.xsd."""
 
-from .order import NormalOrderData, Order, OrderData
-from .types import (
-    # Enums
+from .enums import (
     ImportExportAction,
     OrderContext,
     Incoterms,
@@ -18,7 +16,9 @@ from .types import (
     FreightType,
     RegulatedEntityCategory,
     LoadingUnitPostingsGeneration,
-    # Base types
+)
+
+from .base import (
     Country,
     Address,
     Weights,
@@ -43,12 +43,16 @@ from .types import (
     ContraAccountGroup,
     OrganizationalUnit,
     Header,
-    # Business partner types
+)
+
+from .business_partner import (
     ContactPerson,
     BusinessPartner,
     ConsignmentContactPerson,
     ConsignmentBusinessPartner,
-    # Consignment types
+)
+
+from .consignment import (
     ConsignmentCustomFields,
     ConsignmentAirAndSea,
     ConsignmentItem,
@@ -56,10 +60,6 @@ from .types import (
 )
 
 __all__ = [
-    # Main classes
-    "NormalOrderData",
-    "Order",
-    "OrderData",
     # Enums
     "ImportExportAction",
     "OrderContext",
