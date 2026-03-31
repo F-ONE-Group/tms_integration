@@ -1,10 +1,10 @@
 from datetime import datetime, time
-from typing import Optional
+from typing import Literal, Optional
 from pydantic import BaseModel, Field
 
 
 class Status(BaseModel):
-    satzart: str = Field("STATUS", const=True)
+    satzart: Literal["STATUS"] = "STATUS"
     referenz: str
     tladenr: str
     aufnr: int
@@ -15,8 +15,8 @@ class Status(BaseModel):
     diffmenge: Optional[float] = None
     diffeinh: Optional[str] = None
     hinweis: Optional[str] = None
-    statusdat: Optional[datetime]
-    statuszeit: Optional[time]
+    statusdat: Optional[datetime] = None
+    statuszeit: Optional[time] = None
     ean: Optional[str] = None
     refnr: Optional[str] = None
     ffnr: Optional[int] = None

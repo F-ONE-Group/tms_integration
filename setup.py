@@ -20,18 +20,29 @@ lis_winsped_requirements = get_requirements(
 carlo_requirements = get_requirements(
     os.path.join("tms_integration", "carlo", "requirements.txt")
 )
+windispo_requirements = get_requirements(
+    os.path.join("tms_integration", "windispo", "requirements.txt")
+)
 
 setup(
     name="tms_integration",
-    version="0.1.0",
+    version="1.1.2",
     description="A library for TMS integration",
-    author="Your Name",
-    author_email="your.email@example.com",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    author="F-ONE Group",
+    author_email="admin@f-one.group",
+    url="https://github.com/F-ONE-Group/tms_integration/tree/pypi",
     packages=find_packages(exclude=["tests*"]),
+    include_package_data=True,
+    package_data={
+        "tms_integration.carlo.models": ["xsd/*.xsd"],
+    },
     install_requires=base_requirements,
     extras_require={
         "lis_winsped": lis_winsped_requirements,
         "carlo": carlo_requirements,
+        "windispo": windispo_requirements,
     },
     classifiers=[
         "Programming Language :: Python :: 3",

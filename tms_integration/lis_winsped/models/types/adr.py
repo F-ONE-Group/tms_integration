@@ -1,9 +1,9 @@
-from pydantic import BaseModel, Field, validator
-from typing import Optional
+from pydantic import BaseModel, field_validator
+from typing import Optional, Literal
 
 
 class Adr(BaseModel):
-    satzart: str = Field("ADR", const=True)
+    satzart: Literal["ADR"] = "ADR"
     referenz: Optional[str] = None
     tladenr: Optional[str] = None
     aufnr: Optional[int] = None
@@ -102,12 +102,13 @@ class Adr(BaseModel):
     bonitaetsgrenze: Optional[str] = None
     locode: Optional[str] = None
 
-    @validator("sperre")
-    def validate_boolean(cls, value):
-        if value not in {None, True, False}:
-            raise ValueError("Invalid boolean value")
-        if value == False:
-            return "N"  # Nein
-        elif value == True:
-            return "J"  # Ja
-        return value
+    @field_validator("sperre")
+    @classmethod
+    def validate_boolean_str(cls, value):
+        if value in {True, "J", "j"}:
+            return "J"
+        elif value in {False, "N", "n"}:
+            return "N"
+        elif value is None:
+            return None
+        raise ValueError("sperre must be 'J', 'N', True, False or None")

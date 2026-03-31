@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Literal, Optional
 from datetime import datetime
 
 
 class Geb(BaseModel):
-    satzart: str = Field("GEB", const=True)
+    satzart: Literal["GEB"] = "GEB"
     referenz: str
     tladenr: str
     aufnr: int

@@ -1,10 +1,9 @@
-from pydantic import BaseModel, Field, validator
-from typing import Optional, Union
+from pydantic import BaseModel, field_validator
+from typing import Literal, Optional
 
 
 class Ggut(BaseModel):
-    satzart: str = Field("GGUT", const=True)
-    referenz: str
+    satzart: Literal["GGUT"] = "GGUT"
     tladenr: str
     aufnr: int
     lfdnrggut: int
@@ -45,7 +44,8 @@ class Ggut(BaseModel):
     vertraeggr: Optional[str] = None
     umweltgef: Optional[bool] = None
 
-    @validator("umweltgef")
+    @field_validator("umweltgef")
+    @classmethod
     def validate_boolean(cls, value):
         if value not in {None, True, False}:
             raise ValueError("Invalid boolean value")

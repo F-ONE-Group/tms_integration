@@ -1,5 +1,6 @@
+from typing import Literal
 from pydantic import BaseModel, Field
 
 
 class Ende(BaseModel):
-    satzart: str = Field("ENDE", const=True)
+    satzart: Literal["ENDE"] = "ENDE"

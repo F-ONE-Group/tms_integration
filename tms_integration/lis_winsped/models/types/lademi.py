@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field, validator
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 from datetime import datetime
 
 
 class Lademi(BaseModel):
-    satzart: str = Field("LADEMI", const=True)
+    satzart: Literal["LADEMI"] = "LADEMI"
     referenz: Optional[str] = None
     tladenr: Optional[str] = None
     aufnr: Union[str, int, None] = None
@@ -24,17 +24,3 @@ class Lademi(BaseModel):
     einhbreite: Optional[str] = None
     einhhoehe: Optional[str] = None
     lageplatz: Optional[str] = None
-
-    # @validator(
-    #     "belvorhandsdatum", "entvorhandsdatum", "tourdatum", pre=True, each_item=True, allow_reuse=True
-    # )
-    # def parse_date(cls, value):
-    #     if isinstance(value, str):
-    #         return datetime.strptime(value, "%Y%m%d")
-    #     return value
-
-    # @validator("belvorhandzeit", "entvorhandzeit", "tourzeit", pre=True, each_item=True, allow_reuse=True)
-    # def parse_time(cls, value):
-    #     if isinstance(value, str):
-    #         return datetime.strptime(value, "%H%M").time()
-    #     return value

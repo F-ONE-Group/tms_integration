@@ -4,6 +4,8 @@ import pysftp
 from typing import Optional
 from pydantic import BaseModel
 from pydantic.dataclasses import dataclass
+from backoff import on_exception, expo
+from paramiko.ssh_exception import SSHException
 
 
 class SftpConfig(BaseModel):
@@ -23,7 +25,8 @@ class SftpConfig(BaseModel):
 @dataclass
 class SftpBase:
     config: SftpConfig
-
+    
+    @on_exception(expo, SSHException, max_tries=5)
     def __post_init__(self):
         if self.config.no_host_key:
             self.config.cnopts = pysftp.CnOpts()
@@ -39,6 +42,7 @@ class SftpBase:
         )
         conn.close()
 
+    @on_exception(expo, SSHException, max_tries=5)
     def import_file(self, source_filepath: str, dest_path: str) -> None:
         """
         Uploads a file from the source path to the destination path on the SFTP server.
@@ -61,6 +65,7 @@ class SftpBase:
             dest_filepath = f"{dest_path}/{filename}"
             sftp.put(source_filepath, dest_filepath)
 
+    @on_exception(expo, SSHException, max_tries=5)
     def export_file(self, remote_filepath: str, local_filepath: str) -> None:
         """
         Export a file from a remote SFTP server using the provided credentials.
@@ -80,6 +85,7 @@ class SftpBase:
         ) as sftp:
             sftp.get(remote_filepath, local_filepath)
 
+    @on_exception(expo, SSHException, max_tries=5)
     def get_all_files(self, remote_folder: str):
         """Export all the files from a specific remove SFTP direction using the provided credentials
 
@@ -106,6 +112,7 @@ class SftpBase:
 
         return remote_files
 
+    @on_exception(expo, SSHException, max_tries=5)
     def delete_file(self, remote_filepath: str):
         """Remove a file from a remote SFTP sever
 

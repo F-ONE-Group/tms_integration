@@ -1,25 +1,62 @@
 # F-ONE Group TMS Integration
 
-Welcome to the F-ONE Group TMS Integration package! This package provides a collection of tools and libraries to facilitate the integration with various Transportation Management Systems (TMS).
+Welcome to the F-ONE Group TMS Integration package! This Python library is designed to streamline the integration process with various Transportation Management Systems (TMS). It provides robust tools and utilities to facilitate seamless communication and data exchange between your systems and supported TMS platforms.
 
-## TMS APIs Available
-- **Lis Winsped**
-- **Carlo** (coming soon)
-
+## Features
+- **Lis Winsped Integration**: Comprehensive support for integrating with the Lis Winsped TMS, including models and utilities for handling various data types.
+- **Carlo Integration**: (Coming soon) Future support for the Carlo TMS platform.
+- **Windispo Integration**: XML import file generation for `createjob.v1` payloads and SFTP-based import support.
+- **Utilities**: Includes XML handling and SFTP utilities to simplify data transfer and processing.
 
 ## Installation
-TODO
+To install the library, use pip:
+
+```bash
+pip install fone-tms-integration
+```
+
+## Usage
+Here is a quick example to get started:
+
+```python
+from tms_integration.lis_winsped import lis_winsped
+
+# Example usage
+response = lis_winsped.some_function()
+print(response)
+```
+
+For detailed usage instructions, please refer to the documentation provided in the respective modules.
+
+## Documentation
+The library is organized into the following modules:
+
+### Lis Winsped
+- Models for handling various data types such as orders, ADR, and more.
+- Utilities for interacting with the Lis Winsped TMS API.
+
+### Carlo (Coming Soon)
+- Planned support for Carlo TMS integration.
+
+### Windispo
+- `createjob.v1` XML import generation with typed payload models.
+- SFTP import helper for transferring generated XML files.
+
+### Utilities
+- XML handling utilities.
+- SFTP utilities for secure file transfers.
 
 ## Contributing
+We welcome contributions to enhance the functionality of this library. To contribute:
 
-Contributions are welcome! Please fork the repository and submit a pull request for any features, bug fixes, or enhancements.
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature-branch`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
-5. Create a new pull request
-
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix (`git checkout -b feature-branch`).
+3. Commit your changes with clear and concise messages (`git commit -am 'Add new feature'`).
+4. Push your branch to your fork (`git push origin feature-branch`).
+5. Submit a pull request for review.
 
 ## License
-This project is licensed under the Apache 2.0 License - see the LICENSE file for details.
+This project is licensed under the Apache 2.0 License. See the LICENSE file for more details.
+
+## Support
+For any issues or questions, please open an issue on the GitHub repository or contact the maintainers directly.

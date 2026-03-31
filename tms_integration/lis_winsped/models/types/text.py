@@ -1,34 +1,36 @@
-from pydantic import BaseModel, Field, validator
-from typing import Optional
+from pydantic import BaseModel, field_validator
+from typing import Optional, Literal
 from datetime import datetime
 
 
 class Text(BaseModel):
-    satzart: str = Field("TEXT", const=True)
+    satzart: Literal["TEXT"] = "TEXT"
     referenz: str
     tladenr: str
     aufnr: int
     txtartnr: int
     txtstr1: str
-    gtext: Optional[bool] = None
+    gtext: Optional[str] = None  # changed from Optional[bool]
     txtstr2: Optional[str] = None
     txtstr3: Optional[str] = None
     txtstr4: Optional[str] = None
     txtstr5: Optional[str] = None
     txtdatum: Optional[datetime] = None
 
-    @validator("txtdatum", pre=True)
+    @field_validator("txtdatum", mode="before")
+    @classmethod
     def parse_date(cls, value):
         if isinstance(value, str):
             return datetime.strptime(value, "%Y%m%d")
         return value
 
-    @validator("gtext")
-    def validate_boolean(cls, value):
-        if value not in {None, True, False}:
-            raise ValueError("Invalid boolean value")
-        if value == False:
-            return "N"  # Nein
-        elif value == True:
-            return "J"  # Ja
-        return value
+    @field_validator("gtext")
+    @classmethod
+    def validate_gtext(cls, value):
+        if value in {True, "J", "j"}:
+            return "J"
+        elif value in {False, "N", "n"}:
+            return "N"
+        elif value is None:
+            return None
+        raise ValueError("gtext must be 'J', 'N', True, False, or None")
