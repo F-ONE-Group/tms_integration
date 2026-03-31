@@ -27,6 +27,7 @@ class LisWinSped(SftpBase):
             "…": "...",
             "–": "-",
             "—": "--",
+            "ẞ": "SS",
         }
         for char, repl in replacements.items():
             text = text.replace(char, repl)
@@ -59,7 +60,7 @@ class LisWinSped(SftpBase):
             delete=False,
         ) as tmp_file:
             import_file_name = tmp_file.name
-            import_file_text = dms_payload.generate_txt()
+            import_file_text = self._sanitize_cp1252(dms_payload.generate_txt())
             tmp_file.write(import_file_text)
             tmp_file.close()
             self.import_file(import_file_name, self.import_dest_folder)
