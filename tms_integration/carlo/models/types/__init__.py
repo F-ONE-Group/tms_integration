@@ -16,6 +16,7 @@ from .enums import (
     FreightType,
     RegulatedEntityCategory,
     LoadingUnitPostingsGeneration,
+    OrderOfferOrigin,
 )
 
 from .base import (
@@ -43,6 +44,10 @@ from .base import (
     ContraAccountGroup,
     OrganizationalUnit,
     Header,
+    ChannelOfDistribution,
+    OrderOfferBordereauData,
+    OrderOfferBaseInformation,
+    SsccCurrent,
 )
 
 from .business_partner import (
@@ -76,6 +81,7 @@ __all__ = [
     "FreightType",
     "RegulatedEntityCategory",
     "LoadingUnitPostingsGeneration",
+    "OrderOfferOrigin",
     # Base types
     "Country",
     "Address",
@@ -101,6 +107,10 @@ __all__ = [
     "ContraAccountGroup",
     "OrganizationalUnit",
     "Header",
+    "ChannelOfDistribution",
+    "OrderOfferBordereauData",
+    "OrderOfferBaseInformation",
+    "SsccCurrent",
     # Business partner types
     "ContactPerson",
     "BusinessPartner",

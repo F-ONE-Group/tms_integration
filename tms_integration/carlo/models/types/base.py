@@ -75,20 +75,12 @@ class Size(BaseModel):
 
 
 class Dimensions(BaseModel):
-    """Dimension information."""
+    """Dimension information (linear, area, volume measurements)."""
 
-    length_in_meters: Optional[Decimal] = Field(
-        None, serialization_alias="LengthInMeters"
-    )
-    width_in_meters: Optional[Decimal] = Field(
-        None, serialization_alias="WidthInMeters"
-    )
-    height_in_meters: Optional[Decimal] = Field(
-        None, serialization_alias="HeightInMeters"
-    )
-    volume_in_cubic_meters: Optional[Decimal] = Field(
-        None, serialization_alias="VolumeInCubicMeters"
-    )
+    meter: Optional[Decimal] = Field(None, serialization_alias="Meter")
+    square_meter: Optional[Decimal] = Field(None, serialization_alias="SquareMeter")
+    cubic_meter: Optional[Decimal] = Field(None, serialization_alias="CubicMeter")
+    action: Optional[ImportExportAction] = Field(None, serialization_alias="Action")
 
 
 class Money(BaseModel):
@@ -345,3 +337,67 @@ class Header(BaseModel):
 
     send_date: datetime = Field(..., serialization_alias="SendDate")
     export_item_reference: str = Field(..., serialization_alias="ExportItemReference")
+
+
+class ChannelOfDistribution(BaseModel):
+    """Channel of distribution - indicates how the sale came about (e.g., direct sale, phone sale)."""
+
+    matchcode: Optional[str] = Field(
+        None, max_length=10, serialization_alias="Matchcode"
+    )
+    number: Optional[int] = Field(None, serialization_alias="Number")
+    action: Optional[ImportExportAction] = Field(None, serialization_alias="Action")
+
+
+class OrderOfferBordereauData(BaseModel):
+    """Bordereau data for order/offer."""
+
+    traffic_type: Optional[str] = Field(
+        None, max_length=100, serialization_alias="TrafficType"
+    )
+    sender_id: Optional[str] = Field(
+        None, max_length=10, serialization_alias="SenderId"
+    )
+    receiver_id: Optional[str] = Field(
+        None, max_length=10, serialization_alias="ReceiverId"
+    )
+    carrier_address: Optional[str] = Field(
+        None, max_length=2000, serialization_alias="CarrierAddress"
+    )
+    vehicle_license_plate: Optional[str] = Field(
+        None, max_length=30, serialization_alias="VehicleLicensePlate"
+    )
+    action: Optional[ImportExportAction] = Field(None, serialization_alias="Action")
+
+
+class OrderOfferBaseInformation(BaseModel):
+    """Extended information fields for order/offer (Info1-Info20)."""
+
+    info1: Optional[str] = Field(None, max_length=2000, serialization_alias="Info1")
+    info2: Optional[str] = Field(None, max_length=2000, serialization_alias="Info2")
+    info3: Optional[str] = Field(None, max_length=2000, serialization_alias="Info3")
+    info4: Optional[str] = Field(None, max_length=2000, serialization_alias="Info4")
+    info5: Optional[str] = Field(None, max_length=2000, serialization_alias="Info5")
+    info6: Optional[str] = Field(None, max_length=2000, serialization_alias="Info6")
+    info7: Optional[str] = Field(None, max_length=2000, serialization_alias="Info7")
+    info8: Optional[str] = Field(None, max_length=2000, serialization_alias="Info8")
+    info9: Optional[str] = Field(None, max_length=2000, serialization_alias="Info9")
+    info10: Optional[str] = Field(None, max_length=2000, serialization_alias="Info10")
+    info11: Optional[str] = Field(None, max_length=2000, serialization_alias="Info11")
+    info12: Optional[str] = Field(None, max_length=2000, serialization_alias="Info12")
+    info13: Optional[str] = Field(None, max_length=2000, serialization_alias="Info13")
+    info14: Optional[str] = Field(None, max_length=2000, serialization_alias="Info14")
+    info15: Optional[str] = Field(None, max_length=2000, serialization_alias="Info15")
+    info16: Optional[str] = Field(None, max_length=2000, serialization_alias="Info16")
+    info17: Optional[str] = Field(None, max_length=2000, serialization_alias="Info17")
+    info18: Optional[str] = Field(None, max_length=2000, serialization_alias="Info18")
+    info19: Optional[str] = Field(None, max_length=2000, serialization_alias="Info19")
+    info20: Optional[str] = Field(None, max_length=2000, serialization_alias="Info20")
+    action: Optional[ImportExportAction] = Field(None, serialization_alias="Action")
+
+
+class SsccCurrent(BaseModel):
+    """Serial Shipping Container Code (SSCC) current."""
+
+    code: Optional[str] = Field(None, max_length=35, serialization_alias="Code")
+    action: Optional[ImportExportAction] = Field(None, serialization_alias="Action")

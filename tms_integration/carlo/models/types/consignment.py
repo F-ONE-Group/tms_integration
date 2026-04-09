@@ -39,6 +39,7 @@ from .base import (
     ContainerType,
     CustomTypeValue,
     Country,
+    SsccCurrent,
 )
 from .business_partner import (
     BusinessPartner,
@@ -181,6 +182,11 @@ class ConsignmentItem(BaseModel):
     custom_float8: Optional[Decimal] = Field(None, serialization_alias="CustomFloat8")
     custom_float9: Optional[Decimal] = Field(None, serialization_alias="CustomFloat9")
     custom_float10: Optional[Decimal] = Field(None, serialization_alias="CustomFloat10")
+    custom_float11: Optional[Decimal] = Field(None, serialization_alias="CustomFloat11")
+    custom_float12: Optional[Decimal] = Field(None, serialization_alias="CustomFloat12")
+    custom_float13: Optional[Decimal] = Field(None, serialization_alias="CustomFloat13")
+    custom_float14: Optional[Decimal] = Field(None, serialization_alias="CustomFloat14")
+    custom_float15: Optional[Decimal] = Field(None, serialization_alias="CustomFloat15")
     best_before_date: Optional[datetime] = Field(
         None, serialization_alias="BestBeforeDate"
     )
@@ -229,6 +235,32 @@ class ConsignmentItem(BaseModel):
     batch_number: Optional[str] = Field(
         None, max_length=30, serialization_alias="BatchNumber"
     )
+    storage_serial_numbers: Optional[str] = Field(
+        None, serialization_alias="StorageSerialNumbers"
+    )
+    seal_number: Optional[str] = Field(
+        None, max_length=30, serialization_alias="SealNumber"
+    )
+    info1: Optional[str] = Field(None, max_length=2000, serialization_alias="Info1")
+    info2: Optional[str] = Field(None, max_length=2000, serialization_alias="Info2")
+    info3: Optional[str] = Field(None, max_length=2000, serialization_alias="Info3")
+    info4: Optional[str] = Field(None, max_length=2000, serialization_alias="Info4")
+    info5: Optional[str] = Field(None, max_length=2000, serialization_alias="Info5")
+    info6: Optional[str] = Field(None, max_length=2000, serialization_alias="Info6")
+    info7: Optional[str] = Field(None, max_length=2000, serialization_alias="Info7")
+    info8: Optional[str] = Field(None, max_length=2000, serialization_alias="Info8")
+    info9: Optional[str] = Field(None, max_length=2000, serialization_alias="Info9")
+    info10: Optional[str] = Field(None, max_length=2000, serialization_alias="Info10")
+    loading_duration_in_minutes: Optional[int] = Field(
+        None, serialization_alias="LoadingDurationInMinutes"
+    )
+    unloading_duration_in_minutes: Optional[int] = Field(
+        None, serialization_alias="UnloadingDurationInMinutes"
+    )
+    sscc_currents: Optional[List[SsccCurrent]] = Field(
+        None, serialization_alias="SsccCurrents"
+    )
+    dimensions: Optional[Dimensions] = Field(None, serialization_alias="Dimensions")
     action: Optional[ImportExportAction] = Field(None, serialization_alias="Action")
 
 

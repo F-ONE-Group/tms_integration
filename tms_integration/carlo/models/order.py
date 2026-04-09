@@ -14,11 +14,14 @@ from pydantic import BaseModel, Field
 import uuid
 from lxml import etree as lxml_etree
 
-from .types.enums import ImportExportAction, OrderContext
+from .types.enums import ImportExportAction, OrderContext, OrderOfferOrigin
 from .types.base import (
     Header,
     OrganizationalUnit,
     Currency,
+    ChannelOfDistribution,
+    OrderOfferBordereauData,
+    OrderOfferBaseInformation,
 )
 from .types.business_partner import BusinessPartner, ContactPerson
 from .types.consignment import Consignment
@@ -87,6 +90,10 @@ class Order(BaseModel):
         None, serialization_alias="CustomDateTime6"
     )
     is_empty_trip: Optional[bool] = Field(None, serialization_alias="IsEmptyTrip")
+    origin: Optional[OrderOfferOrigin] = Field(None, serialization_alias="Origin")
+    bordereau_data: Optional[OrderOfferBordereauData] = Field(
+        None, serialization_alias="BordereauData"
+    )
     posting_reference1: Optional[str] = Field(
         None, max_length=30, serialization_alias="PostingReference1"
     )
@@ -99,6 +106,9 @@ class Order(BaseModel):
     posting_reference4: Optional[str] = Field(
         None, max_length=30, serialization_alias="PostingReference4"
     )
+    channel_of_distribution: Optional[ChannelOfDistribution] = Field(
+        None, serialization_alias="ChannelOfDistribution"
+    )
     vessel_exchange_currency: Optional[Currency] = Field(
         None, serialization_alias="VesselExchangeCurrency"
     )
@@ -107,6 +117,9 @@ class Order(BaseModel):
     )
     vessel_exchange_date: Optional[date_type] = Field(
         None, serialization_alias="VesselExchangeDate"
+    )
+    information: Optional[OrderOfferBaseInformation] = Field(
+        None, serialization_alias="Information"
     )
     action: Optional[ImportExportAction] = Field(None, serialization_alias="Action")
 

@@ -156,3 +156,19 @@ class LoadingUnitPostingsGeneration(IntEnum):
     YES = 0  # Ja (Note: 0 = Yes in the XSD)
     NO = 1  # Nein
     DECIDE_LATER = 2  # Nicht definiert
+
+
+class OrderOfferOrigin(IntEnum):
+    """Order/offer origin enumeration - indicates how the order was created."""
+
+    MANUALLY = 0  # Manuell
+    TEMPLATE = 1  # Vorlage
+    OFFER = 2  # Angebot
+    INTERFACE = 3  # Schnittstelle
+    DOCUMENT_PROCESSING = 4  # Dokumentverarbeitung
+    DUPLICATED = 5  # Dupliziert
+    MAINTENANCE_ORDER = 6  # Pflegeauftrag
+    ANNUAL_MAINTENANCE_ORDER = 7  # Pflegeauftrag jährlich
+    SEAFREIGHT = 8  # Seefracht
+    CARLO_CLOUD_SERVICES = 9  # Cloud Auftrag
+    SINGLE_CALCULATION = 10  # Einzelkalkulation
